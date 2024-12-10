@@ -1,0 +1,37 @@
+<div class="container mt-5">
+    <?php if ($searchQuery): ?>
+        <h2>Search Results for "<?= htmlspecialchars($searchQuery) ?>"</h2>
+    <?php else: ?>
+        <h2>All Posts:</h2>
+    <?php endif; ?>
+
+    <span>Total posts: <?= count($posts) ?></span><br>
+
+    <?php if (!empty($posts)): ?>
+        <div class="post-list">
+            <?php foreach ($posts as $post): ?>
+                <div class="post-card">
+                    <div class="post-header">
+                        <h3><?= htmlspecialchars($post['title']) ?></h3>
+                        <small>Module: <?= htmlspecialchars($post['module_name']) ?></small>
+                    </div>
+                    <div class="post-body">
+                        <p>
+                            <?= htmlspecialchars(substr($post['content'], 0, 200)) ?>...
+                            <a href="view_post.php?id=<?= $post['id'] ?>" class="btn btn-link btn-sm">Read More</a>
+                        </p>
+                        <?php if (!empty($post['image'])): ?>
+                            <img src="<?= htmlspecialchars($post['image']) ?>" alt="Post Image" class="post-image">
+                        <?php endif; ?>
+                    </div>
+                    <div class="post-actions">
+                        <a href="update_post.php?id=<?= $post['id'] ?>" class="btn btn-warning btn-sm">Update</a>
+                        <a href="delete.php?id=<?= $post['id'] ?>" class="btn btn-danger btn-sm">Delete</a>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php else: ?>
+        <p>No posts found.</p>
+    <?php endif; ?>
+</div>
